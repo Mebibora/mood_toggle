@@ -12,22 +12,26 @@ void main() {
 
 // Mood Model - The "Brain" of our app
 class MoodModel with ChangeNotifier {
-  String _currentMood = '😊 use your own img here ';
-
+  String _currentMood = '\u{1F601} ';
+  Color _bgColor = Colors.white;
+  Color get backgroundColor => _bgColor;
   String get currentMood => _currentMood;
 
-  void setHappy() {
-    _currentMood = '😊 use your own img here ';
-    notifyListeners();
+  void setHappy() {    
+    _currentMood = '\u{1F601} ';
+    _bgColor = Colors.yellow;
+    notifyListeners();  
   }
 
   void setSad() {
-    _currentMood = '😢 use your own img here ';
+    _currentMood = '\u{1F61F} ';
+    _bgColor = Colors.blue;
     notifyListeners();
   }
 
   void setExcited() {
-    _currentMood = '🎉 use your own img here ';
+    _currentMood = '\u{1F929} ';
+    _bgColor = Colors.orange;
     notifyListeners();
   }
 }
@@ -36,6 +40,7 @@ class MoodModel with ChangeNotifier {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: 'Mood Toggle Challenge',
       theme: ThemeData(primarySwatch: Colors.blue),
@@ -49,6 +54,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Provider.of<MoodModel>(context).backgroundColor,
       appBar: AppBar(title: Text('Mood Toggle Challenge')),
       body: Center(
         child: Column(
@@ -85,23 +91,38 @@ class MoodButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
-          onPressed: () {
-            Provider.of<MoodModel>(context, listen: false).setHappy();
-          },
-          child: Text('Happy 😊 use your own img here '),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<MoodModel>(context, listen: false).setHappy();
+              },
+              child: Text('Happy \u{1F601} '),
+            ),
+            //Text('${Provider.of<MoodModel>(context).happyCount}'),
+          ],
         ),
-        ElevatedButton(
-          onPressed: () {
-            Provider.of<MoodModel>(context, listen: false).setSad();
-          },
-          child: Text('Sad 😢 use your own img here '),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<MoodModel>(context, listen: false).setSad();
+              },
+              child: Text('Sad \u{1F61F} '),
+            ),
+            //Text('${Provider.of<MoodModel>(context).sadCount}'),
+          ],
         ),
-        ElevatedButton(
-          onPressed: () {
-            Provider.of<MoodModel>(context, listen: false).setExcited();
-          },
-          child: Text('Excited 🎉 use your own img here '),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<MoodModel>(context, listen: false).setExcited();
+              },
+              child: Text('Excited \u{1F929} '),
+            ),
+            //Text('${Provider.of<MoodModel>(context).excitedCount}'),
+          ],
         ),
       ],
     );
