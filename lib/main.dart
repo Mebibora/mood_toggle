@@ -16,22 +16,28 @@ class MoodModel with ChangeNotifier {
   Color _bgColor = Colors.white;
   Color get backgroundColor => _bgColor;
   String get currentMood => _currentMood;
+  int happyCount = 0;
+  int sadCount = 0;
+  int excitedCount = 0;
 
   void setHappy() {    
     _currentMood = '\u{1F601} ';
     _bgColor = Colors.yellow;
+    happyCount += 1;
     notifyListeners();  
   }
 
   void setSad() {
     _currentMood = '\u{1F61F} ';
     _bgColor = Colors.blue;
+    sadCount += 1;
     notifyListeners();
   }
 
   void setExcited() {
     _currentMood = '\u{1F929} ';
     _bgColor = Colors.orange;
+    excitedCount += 1;
     notifyListeners();
   }
 }
@@ -99,7 +105,7 @@ class MoodButtons extends StatelessWidget {
               },
               child: Text('Happy \u{1F601} '),
             ),
-            //Text('${Provider.of<MoodModel>(context).happyCount}'),
+            Text('${Provider.of<MoodModel>(context).happyCount}'),
           ],
         ),
         Column(
@@ -110,7 +116,7 @@ class MoodButtons extends StatelessWidget {
               },
               child: Text('Sad \u{1F61F} '),
             ),
-            //Text('${Provider.of<MoodModel>(context).sadCount}'),
+            Text('${Provider.of<MoodModel>(context).sadCount}'),
           ],
         ),
         Column(
@@ -121,7 +127,7 @@ class MoodButtons extends StatelessWidget {
               },
               child: Text('Excited \u{1F929} '),
             ),
-            //Text('${Provider.of<MoodModel>(context).excitedCount}'),
+            Text('${Provider.of<MoodModel>(context).excitedCount}'),
           ],
         ),
       ],
