@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 void main() {
   runApp(
@@ -19,6 +20,8 @@ class MoodModel with ChangeNotifier {
   int happyCount = 0;
   int sadCount = 0;
   int excitedCount = 0;
+  int randomInt = 0;
+  int randomCount = 0;
 
   void setHappy() {    
     _currentMood = '\u{1F601} ';
@@ -38,6 +41,23 @@ class MoodModel with ChangeNotifier {
     _currentMood = '\u{1F929} ';
     _bgColor = Colors.orange;
     excitedCount += 1;
+    notifyListeners();
+  }
+
+  void setRandom() {
+    randomInt = Random().nextInt(3);
+    switch (randomInt){
+      case 0:
+        _currentMood = '\u{1F601} ';
+        _bgColor = Colors.yellow;
+      case 1:
+        _currentMood = '\u{1F61F} ';
+        _bgColor = Colors.blue;        
+      case 2:
+        _currentMood = '\u{1F929} ';
+        _bgColor = Colors.orange;       
+    }
+    randomCount += 1;
     notifyListeners();
   }
 }
@@ -128,6 +148,17 @@ class MoodButtons extends StatelessWidget {
               child: Text('Excited \u{1F929} '),
             ),
             Text('${Provider.of<MoodModel>(context).excitedCount}'),
+          ],
+        ),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<MoodModel>(context, listen: false).setRandom();
+              },
+              child: Text('Random \u{1F914} '),
+            ),
+            Text('${Provider.of<MoodModel>(context).randomCount}'),
           ],
         ),
       ],
